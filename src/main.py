@@ -15,8 +15,8 @@ def init_main_window(initial_text, after_callback, delete_callback):
     screen = pygame.display.set_mode((850, 600))
 
     pygame.display.set_caption("WARNING!")
-    pygame.display.set_icon(pygame.image.load("warning-icon.png"))
-    screen.fill((0, 0, 0))  # black background
+    pygame.display.set_icon(pygame.image.load("../warning-icon.png"))
+    screen.fill((0, 0, 0))
 
     font_medium = pygame.font.SysFont("Helvetica", 20, bold=True)
     font_small = pygame.font.SysFont("Helvetica", 16)
