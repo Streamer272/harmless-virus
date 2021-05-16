@@ -3,6 +3,9 @@ from threading import Thread
 from time import sleep
 from random import randint
 
+from screen import Screen
+from text import Text
+
 
 def draw_text(screen, font, text, coordinates):
     label = font.render(str(text), True, (35, 250, 35))
@@ -15,7 +18,7 @@ def init_main_window(initial_text, after_callback, delete_callback):
     screen = pygame.display.set_mode((850, 600))
 
     pygame.display.set_caption("WARNING!")
-    pygame.display.set_icon(pygame.image.load("../warning-icon.png"))
+    pygame.display.set_icon(pygame.image.load("./warning-icon.png"))
     screen.fill((0, 0, 0))
 
     font_medium = pygame.font.SysFont("Helvetica", 20, bold=True)
@@ -40,45 +43,10 @@ def init_main_window(initial_text, after_callback, delete_callback):
 
 
 if __name__ == '__main__':
-    def after(screen, font):
-        sleep(3)
+    screen = Screen((850, 600))
+    pygame.display.set_caption("WARNING!!!")
+    pygame.display.set_icon(pygame.image.load("./warning-icon.png"))
 
-        # start numbers spam
+    screen.add_component(Text(screen, pygame.font.SysFont("Helvetica", 32), "Test test", (20, 20)))
 
-    def delete():
-        sleep(3)
-
-        def after_(screen_, font_):
-            global x
-
-            # draw_text(screen_, font_, "Stealing user data... 25%", (20, 50))
-            # sleep(1)
-            # draw_text(screen_, font_, "Stealing user passwords... 50%", (20, 70))
-            # sleep(1)
-            # draw_text(screen_, font_, "Downloading browser history... 75%", (20, 90))
-            # sleep(1)
-            # draw_text(screen_, font_, "Sending browser history to MOM... 100%", (20, 110))
-
-            x = 0
-            label = font_.render(str(f"xx {x}"), True, (35, 250, 35))
-            screen_.blit(label, (20, 50))
-
-            def x_(screen__, font__):
-                global x
-
-                while True:
-                    screen__.fill((0, 0, 0))
-                    label = font_.render(str(f"xx {x}"), True, (35, 250, 35))
-                    screen_.blit(label, (20, 50))
-                    x += 1
-                    print("Updated x to " + str(x))
-                    sleep(1)
-
-            Thread(target=x_, args=[screen_, font_]).start()
-
-        def delete_():
-            delete()
-
-        Thread(target=init_main_window, args=["DON'T CLOSE THIS WINDOW!!!", after_, delete_]).start()
-
-    Thread(target=init_main_window, args=["YOUR PC HAS A VIRUS!!!", after, delete]).start()
+    screen.mainloop()
