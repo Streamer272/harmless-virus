@@ -21,10 +21,15 @@ class Text:
         except:
             pass
 
-    def draw(self):
+    def draw(self) -> None:
         self.__screen.get_screen().blit(self.__font.render(self.__text, True, self.__color), self.__coordinates)
         pygame.display.update()
 
-    def set_text(self, new_text: str) -> None:
+    def set_text(self, new_text: str, render: bool = True) -> None:
         self.__text = str(new_text)
-        self.__screen.render()
+
+        if render:
+            self.__screen.render()
+
+    def get_text(self) -> str:
+        return self.__text

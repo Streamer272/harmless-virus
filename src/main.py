@@ -47,15 +47,24 @@ if __name__ == "__main__":
     pygame.display.set_caption("WARNING!!!")
     pygame.display.set_icon(pygame.image.load("./warning-icon.png"))
 
-    txt1 = Text(screen, pygame.font.SysFont("Helvetica", 32), "Test test", (20, 20))
-    txt2 = Text(screen, pygame.font.SysFont("Helvetica", 22), "Test xx", (20, 50))
+    txt1 = Text(screen, pygame.font.SysFont("Helvetica", 36), "Your PC has been infected!", (20, 20))
 
     screen.add_component(txt1)
-    screen.add_component(txt2)
 
-    def _():
-        txt2.set_text("xx lmao")
+    def hacker_number_spam():
+        y = 40
 
-    screen.add_thread(_, 2)
+        for i in range(24):
+            number_spam_line = Text(screen, pygame.font.SysFont("Helvetica", 18), "", (20, y + 20))
+
+            for i in range(100):
+                number_spam_line.set_text(number_spam_line.get_text() + str(randint(0, 1)), False)
+
+            screen.add_component(number_spam_line)
+
+            y += 20
+            sleep(0.5)
+
+    screen.add_thread(hacker_number_spam, 2)
 
     screen.mainloop()
