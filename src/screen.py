@@ -9,6 +9,7 @@ class Screen:
         self.__screen = pygame.display.set_mode(size)
         self.__components = []
         self.__threads = []
+        self.__on_exit = lambda: 0
 
         self.clear()
 
@@ -23,13 +24,11 @@ class Screen:
         pygame.quit()
 
     def clear(self, render: bool = False) -> None:
-        print("additional clear")
         self.__screen.fill((0, 0, 0))
+
         self.update(render)
 
     def render(self, clear: bool = True) -> None:
-        print("additional render")
-
         if clear:
             self.clear()
 
@@ -42,7 +41,7 @@ class Screen:
 
         self.update(False)
 
-    def update(self, render: bool = True):
+    def update(self, render: bool = True) -> None:
         pygame.display.flip()
 
         if render:
@@ -60,13 +59,15 @@ class Screen:
         if render:
             self.render()
 
-    # noinspection PyMethodMayBeStatic
     def add_thread(self, thread: any, timeout: int) -> None:
         def _() -> None:
             sleep(timeout)
             thread()
 
         self.__threads.append(_)
+
+    def set_exit_callback(self, exit_callback: any) -> None:
+        self.__on_exit = exit_callback
 
     def mainloop(self, destroy_after_exit: bool = True) -> None:
         for thread in self.__threads:
@@ -79,5 +80,7 @@ class Screen:
                 if event.type == pygame.QUIT:
                     if destroy_after_exit:
                         self.destroy()
+
+                    self.__on_exit()
 
                     return None
