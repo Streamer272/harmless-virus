@@ -11,12 +11,11 @@ def main():
     pygame.display.set_caption("WARNING!!!")
     pygame.display.set_icon(pygame.image.load("./warning-icon.png"))
 
-    title = Text(screen, pygame.font.SysFont("Helvetica", 36), "                     YOUR PC HAS BEEN INFECTED!!!",
-                 (20, 20), color=(255, 0, 0))
+    # adding title
+    screen.add_component(Text(screen, pygame.font.SysFont("Helvetica", 36),
+                              "                     YOUR PC HAS BEEN INFECTED!!!", (20, 20), color=(255, 0, 0)))
 
-    screen.add_component(title)
-
-    def hacker_number_spam():
+    def spam_hacker_number():
         y = 40
 
         # in case of user quiting before text has finished drawing
@@ -39,7 +38,45 @@ def main():
     def on_exit():
         print("exited!!!")
 
-    screen.add_thread(hacker_number_spam, 2)
+        sleep(3)
+
+        screen = Screen((850, 600))
+        pygame.display.set_caption("ur ded boi")
+        pygame.display.set_icon(pygame.image.load("./dead-icon.png"))
+
+        # adding title
+        screen.add_component(Text(screen, pygame.font.SysFont("Helvetica", 36),
+                                  "                       DO NOT CLOSE THIS WINDOW!!!", (20, 20), color=(255, 0, 0)))
+
+        def show_troll_message():
+            troll_message = Text(screen, pygame.font.SysFont("Helvetica", 26), "", (20, 60))
+            screen.add_component(troll_message, False)
+
+            # percentage : what message will be displayed under that percentage
+            percentages = {
+                100: "Sending browser history to: MOM, GRANDMA... ",
+                75: "Downloading browser history... ",
+                50: "Stealing credit card numbers... ",
+                25: "Stealing passwords... ",
+            }
+
+            for i in range(101):
+                message = ""
+
+                for percentage in percentages:
+                    if i < percentage:
+                        message = percentages[percentage]
+
+                troll_message.set_text(f"{message}{i}% complete")
+
+                sleep(0.1)
+
+        screen.add_thread(show_troll_message, 0)
+        screen.set_exit_callback(on_exit)
+
+        screen.mainloop()
+
+    screen.add_thread(spam_hacker_number, 2)
     screen.set_exit_callback(on_exit)
 
     screen.mainloop()

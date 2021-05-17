@@ -15,7 +15,11 @@ class Screen:
         self.clear()
 
     def __del__(self) -> None:
-        self.destroy()
+        try:
+            self.destroy()
+
+        except any:
+            pass
 
     def get_screen(self) -> pygame.Surface:
         return self.__screen
@@ -25,7 +29,11 @@ class Screen:
         pygame.quit()
 
     def clear(self, render: bool = False) -> None:
-        self.__screen.fill((0, 0, 0))
+        try:
+            self.__screen.fill((0, 0, 0))
+
+        except pygame.error:
+            pass
 
         self.update(render)
 
