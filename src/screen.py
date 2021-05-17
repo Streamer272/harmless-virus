@@ -3,13 +3,14 @@ from threading import Thread
 from time import sleep
 
 
+# pygame screen controller class
 class Screen:
     def __init__(self, size=(200, 200)) -> None:
         pygame.init()
         self.__screen = pygame.display.set_mode(size)
         self.__components = []
         self.__threads = []
-        self.__on_exit = lambda: 0
+        self.__exit_callback = lambda: 0
 
         self.clear()
 
@@ -36,7 +37,7 @@ class Screen:
             try:
                 component.draw()
 
-            except:
+            except NameError:
                 pass
 
         self.update(False)
@@ -67,9 +68,10 @@ class Screen:
         self.__threads.append(_)
 
     def set_exit_callback(self, exit_callback: any) -> None:
-        self.__on_exit = exit_callback
+        self.__exit_callback = exit_callback
 
     def mainloop(self, destroy_after_exit: bool = True) -> None:
+        # starts all threads
         for thread in self.__threads:
             Thread(target=thread).start()
 
@@ -81,6 +83,11 @@ class Screen:
                     if destroy_after_exit:
                         self.destroy()
 
-                    self.__on_exit()
+                    # in case of exit function fails (window can be already closed)
+                    try:
+                        self.__exit_callback()
+
+                    except any:
+                        pass
 
                     return None

@@ -2,6 +2,7 @@ import pygame
 from screen import Screen
 
 
+# pygame text controller class
 class Text:
     def __init__(self, screen: Screen, font: pygame.font.Font, text: str, coordinates: tuple,
                  color: tuple = (35, 250, 35), draw: bool = True):
@@ -18,7 +19,7 @@ class Text:
         try:
             self.__screen.remove_component(self)
 
-        except:
+        except pygame.error:
             pass
 
     def draw(self) -> None:
