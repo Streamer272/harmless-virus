@@ -47,15 +47,14 @@ if __name__ == "__main__":
     pygame.display.set_caption("WARNING!!!")
     pygame.display.set_icon(pygame.image.load("./warning-icon.png"))
 
-    # txt1 = Text(screen, pygame.font.SysFont("Helvetica", 32), "Test test", (20, 20))
-    # txt2 = Text(screen, pygame.font.SysFont("Helvetica", 22), "Test xx", (20, 50))
-    #
-    # screen.add_component(txt1)
-    # screen.add_component(txt2)
+    txt1 = Text(screen, pygame.font.SysFont("Helvetica", 32), "Test test", (20, 20))
+    txt2 = Text(screen, pygame.font.SysFont("Helvetica", 22), "Test xx", (20, 50))
+
+    screen.add_component(txt1)
+    screen.add_component(txt2)
 
     def _():
-        # txt2.__del_0
-        screen.clear()
+        txt2.set_text("xx lmao")
 
     screen.add_thread(_, 2)
 

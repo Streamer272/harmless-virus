@@ -7,7 +7,7 @@ class Text:
                  color: tuple = (35, 250, 35), draw: bool = True):
         self.__screen = screen
         self.__font = font
-        self.__text = text
+        self.__text = str(text)
         self.__coordinates = coordinates
         self.__color = color
 
@@ -22,5 +22,9 @@ class Text:
             pass
 
     def draw(self):
-        self.__screen.get_screen().blit(self.__font.render(str(self.__text), True, self.__color), self.__coordinates)
+        self.__screen.get_screen().blit(self.__font.render(self.__text, True, self.__color), self.__coordinates)
         pygame.display.update()
+
+    def set_text(self, new_text: str) -> None:
+        self.__text = str(new_text)
+        self.__screen.render()
