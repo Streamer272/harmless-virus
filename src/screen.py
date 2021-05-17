@@ -1,4 +1,6 @@
 import pygame
+from threading import Thread
+from time import sleep
 
 
 class Screen:
@@ -6,6 +8,7 @@ class Screen:
         pygame.init()
         self.__screen = pygame.display.set_mode(size)
         self.__components = []
+        self.__threads = []
 
         self.clear()
 
@@ -20,26 +23,27 @@ class Screen:
         pygame.quit()
 
     def clear(self, render: bool = False) -> None:
+        print("additional clear")
         self.__screen.fill((0, 0, 0))
-
-        if render:
-            self.render()
+        self.update(render)
 
     def render(self, clear: bool = True) -> None:
+        print("additional render")
+
         if clear:
             self.clear()
 
         for component in self.__components:
-            # noinspection PyBroadException
             try:
                 component.draw()
 
             except:
                 pass
 
-    # noinspection PyMethodMayBeStatic
+        self.update(False)
+
     def update(self, render: bool = True):
-        pygame.display.update()
+        pygame.display.flip()
 
         if render:
             self.render()
@@ -51,13 +55,23 @@ class Screen:
             self.render()
 
     def remove_component(self, component: any, render: bool = True) -> None:
-        self.__components.pop(self.__components.index(component))
+        self.__components.remove(component)
 
         if render:
             self.render()
 
     # noinspection PyMethodMayBeStatic
+    def add_thread(self, thread: any, timeout: int) -> None:
+        def _() -> None:
+            sleep(timeout)
+            thread()
+
+        self.__threads.append(_)
+
     def mainloop(self, destroy_after_exit: bool = True) -> None:
+        for thread in self.__threads:
+            Thread(target=thread).start()
+
         while True:
             events = pygame.event.get()
 

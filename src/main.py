@@ -42,11 +42,21 @@ def init_main_window(initial_text, after_callback, delete_callback):
             break
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     screen = Screen((850, 600))
     pygame.display.set_caption("WARNING!!!")
     pygame.display.set_icon(pygame.image.load("./warning-icon.png"))
 
-    screen.add_component(Text(screen, pygame.font.SysFont("Helvetica", 32), "Test test", (20, 20)))
+    # txt1 = Text(screen, pygame.font.SysFont("Helvetica", 32), "Test test", (20, 20))
+    # txt2 = Text(screen, pygame.font.SysFont("Helvetica", 22), "Test xx", (20, 50))
+    #
+    # screen.add_component(txt1)
+    # screen.add_component(txt2)
+
+    def _():
+        # txt2.__del_0
+        screen.clear()
+
+    screen.add_thread(_, 2)
 
     screen.mainloop()
