@@ -18,7 +18,7 @@ def main():
     def spam_hacker_number():
         y = 40
 
-        # in case of user quiting before text has finished drawing
+        # in case of user quits before text has finished drawing
         try:
             for _ in range(25):
                 number_spam_line = Text(screen, pygame.font.SysFont("Helvetica", 18), "    ", (20, y + 20))
@@ -36,10 +36,9 @@ def main():
             pass
 
     def on_exit():
-        print("exited!!!")
-
         sleep(3)
 
+        # noinspection PyShadowingNames
         screen = Screen((850, 600))
         pygame.display.set_caption("ur ded boi")
         pygame.display.set_icon(pygame.image.load("./dead-icon.png"))
@@ -49,7 +48,7 @@ def main():
                                   "                       DO NOT CLOSE THIS WINDOW!!!", (20, 20), color=(255, 0, 0)))
 
         def show_troll_message():
-            troll_message = Text(screen, pygame.font.SysFont("Helvetica", 26), "", (20, 60))
+            troll_message = Text(screen, pygame.font.SysFont("Helvetica", 26), "", (20, 75))
             screen.add_component(troll_message, False)
 
             # percentage : what message will be displayed under that percentage
@@ -60,16 +59,21 @@ def main():
                 25: "Stealing passwords... ",
             }
 
-            for i in range(101):
-                message = ""
+            # in case of user quits before text has finished drawing
+            try:
+                for i in range(101):
+                    message = ""
 
-                for percentage in percentages:
-                    if i < percentage:
-                        message = percentages[percentage]
+                    for percentage in percentages:
+                        if i < percentage:
+                            message = percentages[percentage]
 
-                troll_message.set_text(f"{message}{i}% complete")
+                    troll_message.set_text(f"{message}{i}% complete")
 
-                sleep(0.1)
+                    sleep(0.1)
+
+            except pygame.error:
+                pass
 
         screen.add_thread(show_troll_message, 0)
         screen.set_exit_callback(on_exit)

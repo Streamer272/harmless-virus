@@ -29,11 +29,7 @@ class Screen:
         pygame.quit()
 
     def clear(self, render: bool = False) -> None:
-        try:
-            self.__screen.fill((0, 0, 0))
-
-        except pygame.error:
-            pass
+        self.__screen.fill((0, 0, 0))
 
         self.update(render)
 
