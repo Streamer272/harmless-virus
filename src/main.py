@@ -22,12 +22,13 @@ def main():
         try:
             for _ in range(25):
                 number_spam_line = Text(screen, pygame.font.SysFont("Helvetica", 18), "    ", (20, y + 20))
+                screen.add_component(number_spam_line)
 
                 for __ in range(100):
-                    number_spam_line.set_text(number_spam_line.get_text() + str(randint(0, 1)), False)
+                    number_spam_line.set_text(number_spam_line.get_text() + str(randint(0, 1)))
 
-                screen.add_component(number_spam_line, False)
                 number_spam_line.draw()
+                screen.render()
 
                 y += 20
                 sleep(0.5)
@@ -47,9 +48,9 @@ def main():
         screen.add_component(Text(screen, pygame.font.SysFont("Helvetica", 36),
                                   "                       DO NOT CLOSE THIS WINDOW!!!", (20, 20), color=(255, 0, 0)))
 
-        def show_troll_message():
+        def show_troll_message() -> None:
             troll_message = Text(screen, pygame.font.SysFont("Helvetica", 26), "", (20, 75))
-            screen.add_component(troll_message, False)
+            screen.add_component(troll_message)
 
             # percentage : what message will be displayed under that percentage
             percentages = {
@@ -70,6 +71,8 @@ def main():
 
                     troll_message.set_text(f"{message}{i}% complete")
 
+                    troll_message.render()
+                    screen.update()
                     sleep(0.1)
 
             except pygame.error:
@@ -78,11 +81,13 @@ def main():
         screen.add_thread(show_troll_message, 0)
         screen.set_exit_callback(on_exit)
 
+        screen.render()
         screen.mainloop()
 
     screen.add_thread(spam_hacker_number, 2)
     screen.set_exit_callback(on_exit)
 
+    screen.render()
     screen.mainloop()
 
 

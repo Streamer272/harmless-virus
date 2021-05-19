@@ -28,15 +28,10 @@ class Screen:
     def destroy(self) -> None:
         pygame.quit()
 
-    def clear(self, render: bool = False) -> None:
+    def clear(self) -> None:
         self.__screen.fill((0, 0, 0))
 
-        self.update(render)
-
-    def render(self, clear: bool = True) -> None:
-        if clear:
-            self.clear()
-
+    def render(self) -> None:
         for component in self.__components:
             try:
                 component.draw()
@@ -44,25 +39,17 @@ class Screen:
             except NameError:
                 pass
 
-        self.update(False)
+        self.update()
 
-    def update(self, render: bool = True) -> None:
-        pygame.display.flip()
+    # noinspection PyMethodMayBeStatic
+    def update(self) -> None:
+        pygame.display.update()
 
-        if render:
-            self.render()
-
-    def add_component(self, component: any, render: bool = True) -> None:
+    def add_component(self, component: any) -> None:
         self.__components.append(component)
 
-        if render:
-            self.render()
-
-    def remove_component(self, component: any, render: bool = True) -> None:
+    def remove_component(self, component: any) -> None:
         self.__components.remove(component)
-
-        if render:
-            self.render()
 
     def add_thread(self, thread: any, timeout: int) -> None:
         def _() -> None:
@@ -74,7 +61,7 @@ class Screen:
     def set_exit_callback(self, exit_callback: any) -> None:
         self.__exit_callback = exit_callback
 
-    def mainloop(self, destroy_after_exit: bool = True) -> None:
+    def mainloop(self) -> None:
         # starts all threads
         for thread in self.__threads:
             Thread(target=thread).start()
@@ -84,8 +71,7 @@ class Screen:
 
             for event in events:
                 if event.type == pygame.QUIT:
-                    if destroy_after_exit:
-                        self.destroy()
+                    self.destroy()
 
                     # in case of exit function fails (window can be already closed)
                     try:
