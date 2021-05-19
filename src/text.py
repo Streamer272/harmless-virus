@@ -13,19 +13,12 @@ class Text:
         self.__color = color
         self.__rect = None
 
-        self.draw()
-        self.clear_rect()
-
     def __del__(self):
         try:
             self.__screen.remove_component(self)
 
         except pygame.error:
             pass
-
-    def render(self) -> None:
-        self.clear_rect()
-        self.draw()
 
     def draw(self) -> None:
         self.__rect = self.__font.render(self.__text, True, self.__color)
@@ -36,6 +29,3 @@ class Text:
 
     def get_text(self) -> str:
         return self.__text
-
-    def clear_rect(self) -> None:
-        self.__screen.get_screen().fill((0, 0, 0), rect=self.__rect.get_rect())

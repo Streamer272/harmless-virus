@@ -71,8 +71,8 @@ def main():
 
                     troll_message.set_text(f"{message}{i}% complete")
 
-                    troll_message.render()
-                    screen.update()
+                    screen.clear()
+                    screen.render()
                     sleep(0.1)
 
             except pygame.error:
